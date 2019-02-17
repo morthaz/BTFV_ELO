@@ -1,14 +1,13 @@
 # -*- encoding: utf-8 -*-
-
 from bs4 import BeautifulSoup as bs
 import os
 
 
-comma = ","
-path = "D:\\python\\2012-01-21.html"
+
+# path = "D:\\python\\2012-01-21.html"
 players = []
 
-def check_players(file):
+def get_players(file):
     with open(file, 'r') as r:
         html = bs(r, "html.parser")
         home = html.select(".col-md-6")
@@ -18,7 +17,6 @@ def check_players(file):
                 players.append(helper[j].text.strip())
 
 
-        print(players[1::2])
+        # print(players[1::2])
 
-
-check_players(path)
+# get_players(path)
