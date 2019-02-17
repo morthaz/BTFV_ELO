@@ -3,7 +3,11 @@ import requests
 from bs4 import BeautifulSoup as bs
 import urllib.request
 import os
-import time
+
+"""
+Datei crawled von der BTFV-Seite alle Spielberichte und extrahiert aus dem Spielbericht Mannschaftsnamen und Datum.
+Es wird eine Kopie des Spielberichts mit diesen Informationen abgespeichert.
+"""
 
 
 
@@ -21,7 +25,7 @@ for i in range(2080, 2500):
         # team1, team2: selektiert den Teamnamen aus der Soup.
         team1 = html.select(".col-md-5")[0].text.strip()
         team2 = html.select(".col-md-5")[1].text.strip()
-        
+
         # alles im nächsten Absatz ist dazu da, den Dateinamen zu ändern.
         title = html.select_one(".page-header").text
         title_list = title.split('  ')
