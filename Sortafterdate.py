@@ -1,9 +1,9 @@
 import os
-from bs4 import BeautifulSoup as bs
-import numpy as np
 import shutil
-import time
 
+"""
+Um eine Elo-Wertung zu erstellen sollten die Spielberichte chronologisch abgespeichert werden. 
+"""
 
 pfad = "D:\BTFV-Elo"
 dateien = os.listdir(pfad)
