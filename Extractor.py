@@ -20,15 +20,14 @@ def get_players(file):
             for j in range(len(helper)):
                 players.append(helper[j].text.strip())
     names = players[1::2]
-    print(names[0])
     with open(mastercsv, 'r+', newline='') as elo_csv:
         reader = csv.reader(elo_csv, delimiter='\t')
-        writer = csv.writer(elo_csv, delimiter='\n')
+        writer = csv.writer(elo_csv, delimiter='\t', quotechar='\n')
         new_players = 0
         existing_players = 0
         for row in reader:
-            for i in range(len(names)):
-                if names[i] in row:
+            for name in names:
+                if name in row:
                     names.remove(name)
                     existing_players += 1
                 else:
@@ -36,8 +35,11 @@ def get_players(file):
             if not names:
                 break
             else:
-                for i in range(len(names)):
-                    writer.writerow(['\n' + names[i] + '\t' + str(startelo)+ '\t' + str(games)])
+                for name in names:
+                    fullname = name.split(', ')
+                    first_name = fullname[0]
+                    last_name = fullname[1]
+                    writer.writerow(['\n' + last_name + '\t' + first_name + '\t' + str(startelo)+ '\t' + str(games)])
                     new_players += 1
 
     print("Existing = " + str(existing_players) + "| New = " + str(new_players))
