@@ -1,8 +1,6 @@
 # -*- encoding: utf-8 -*-
 from bs4 import BeautifulSoup as bs
-import os
 import csv
-
 
 
 path = "D:\\python\\2012-01-21.html"
@@ -10,6 +8,7 @@ mastercsv = "D:\\python\\BTFV-ELO.csv"
 startelo = 800
 games = 0
 players = []
+
 
 def get_players(file):
     with open(file, 'r') as r:
@@ -21,8 +20,8 @@ def get_players(file):
                 players.append(helper[j].text.strip())
     names = players[1::2]
     with open(mastercsv, 'r+', newline='') as elo_csv:
-        reader = csv.reader(elo_csv, delimiter='\t')
-        writer = csv.writer(elo_csv, delimiter='\t', quotechar='\n')
+        reader = csv.reader(elo_csv)
+        writer = csv.writer(elo_csv, quotechar='\n')
         new_players = 0
         existing_players = 0
         for row in reader:
@@ -37,14 +36,13 @@ def get_players(file):
             else:
                 for name in names:
                     fullname = name.split(', ')
-                    first_name = fullname[0]
-                    last_name = fullname[1]
-                    writer.writerow(['\n' + last_name + '\t' + first_name + '\t' + str(startelo)+ '\t' + str(games)])
+                    first_name = fullname[1]
+                    last_name = fullname[0]
+                    writer.writerow(['\n' + last_name + ',' + first_name + ',' + str(startelo) + ',' + str(games)])
                     new_players += 1
 
     print("Existing = " + str(existing_players) + "| New = " + str(new_players))
-        # print(players[1::2])
-
+    # print(players[1::2])
 
 
 get_players(path)
