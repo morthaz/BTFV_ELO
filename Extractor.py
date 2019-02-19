@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup as bs
 import csv
+import numpy as np
 
 
 path = "D:\\python\\2012-01-21.html"
@@ -8,6 +9,8 @@ mastercsv = "D:\\python\\BTFV-ELO.csv"
 elo = 800
 games = 0
 players = []
+firstnames = []
+lastnames = []
 
 
 def get_players(file):
@@ -19,21 +22,44 @@ def get_players(file):
             for j in range(len(helper)):
                 players.append(helper[j].text.strip())
     names = players[1::2]
-    return names
+    for name in names:
+        fullnames = name.split(', ')
+        firstnames.append(fullnames[1])
+        lastnames.append(fullnames[0])
+    # firstnames = fullnames[1::2]
+    # lastnames = fullnames[::2]
+    print(firstnames, lastnames)
+
+    return names, firstnames, lastnames
 
 
 def compare_players(file):
-    names = get_players(file)
+    names, firstnames, lastnames = get_players(file)
     with open(mastercsv, 'r+', newline='') as elo_csv:
 
         reader = csv.DictReader(elo_csv)
+        # print(lastnames)
         for row in reader:
-            for name in names:
-                fullname = name.split(', ')
-                first_name = fullname[1]
-                last_name = fullname[0]
-                if first_name == row['Firstname'] and last_name == row['Lastname']:
-                    print(name)
+            # print(row)
+            indices = [i for i, x in enumerate(lastnames) if x == row['Lastname']]
+            for i in indices:
+                if
+            if row['Lastname'] in lastnames:
+                # x = lastnames.index(row['Lastname'])
+                print(row['Lastname'], x)
+                if row['Firstname'] in firstnames[x]:
+                    print('izz da')
+                elif row['Short'] in firstnames[x]:
+                    print('izz als Short da')
+
+            # for name in names:
+            #     fullname = name.split(', ')
+            #     first_name = fullname[1]
+            #     last_name = fullname[0]
+                # if first_name == row['Firstname'] and last_name == row['Lastname']:
+                #     print('Vorhanden')
+                # else:
+                #     print('nicht vorhanden')
             # readrow = reader[row].split(',')
             # name_dict = { "Player" + row:{"Name": readrow[0] + ' ' + readrow[1], "ELO": readrow[2], "Games": readrow[3]}}
             # print(name_dict)
