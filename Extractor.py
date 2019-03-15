@@ -4,11 +4,11 @@ import csv
 import numpy as np
 
 
-path = "D:\\python\\2012-01-21.html"
-mastercsv = "D:\\python\\BTFV-ELO.csv"
+path = "G:\\BTFV-Elo\\Datumssortiert\\2012-01-22(0).html"
+mastercsv = "G:\\BTFV-Elo\\Datumssortiert\\BTFV-ELO.csv"
 elo = 800
 games = 0
-players = []
+names = []
 firstnames = []
 lastnames = []
 
@@ -17,11 +17,12 @@ def get_players(file):
     with open(file, 'r') as r:
         html = bs(r, "html.parser")
         home = html.select(".col-md-6")
+        # print(home)
+
         for i in range(len(home)):
-            helper = home[i].find_all("td", class_="")
+            helper = home[i].find_all("td", class_="player")
             for j in range(len(helper)):
-                players.append(helper[j].text.strip())
-    names = players[1::2]
+                names.append(helper[j].text.strip())
     for name in names:
         fullnames = name.split(', ')
         firstnames.append(fullnames[1])
@@ -42,8 +43,8 @@ def compare_players(file):
         for row in reader:
             # print(row)
             indices = [i for i, x in enumerate(lastnames) if x == row['Lastname']]
-            for i in indices:
-                if
+            # for i in indices:
+            #     if
             if row['Lastname'] in lastnames:
                 # x = lastnames.index(row['Lastname'])
                 print(row['Lastname'], x)
@@ -74,23 +75,21 @@ def compare_players(file):
 
 
 def write_players(file):
-    names = get_players(file)
+    names, firstnames, lastnames = get_players(file)
+    print(names)
     with open(mastercsv, 'r+', newline='') as elo_csv:
         fieldnames = ['Lastname', 'Firstname', 'Short', 'ELO', 'Games']
         writer = csv.DictWriter(elo_csv, quotechar='\n', fieldnames=fieldnames)
         writer.writeheader()
         new_players = 0
         existing_players = 0
-        for name in names:
-            fullname = name.split(', ')
-            first_name = fullname[1]
-            last_name = fullname[0]
-            first_name_short = fullname[1][0] + '.'
-            name_dict = writer.writerow({'Lastname': last_name, 'Firstname': first_name, 'Short': first_name_short,
+        for i in range(len((names))):
+            first_name_short = firstnames[i][0] + '.'
+            name_dict = writer.writerow({'Lastname': lastnames[i], 'Firstname': firstnames[i], 'Short': first_name_short,
                              'ELO': str(elo), 'Games': str(games)})
             new_players += 1
     print("Existing = " + str(existing_players) + "| New = " + str(new_players))
     # print(players[1::2])
 
 
-compare_players(path)
+write_players(path)
