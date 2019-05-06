@@ -20,7 +20,7 @@ for i in range(2080, 2500):
 
         # r: catcht die einzelnen Spielberichte, die sich aus start, dem Counter und '/no_frame' zusammensetzen
         r = requests.get(start + str(i) + '/no_frame')
-        html = bs(r.text, "html.parser")
+        html = bs(r.content, "html.parser")
 
         # team1, team2: selektiert den Teamnamen aus der Soup.
         team1 = html.select(".col-md-5")[0].text.strip()
@@ -32,21 +32,13 @@ for i in range(2080, 2500):
         liga = title_list[0].split(' ')
         liga[0] = liga[0].strip()
 
-        # Probleme mit dem ü haben den nächsten Absatz nötig gemacht. Sauberere Lösung appreciated.
-        if liga[1].startswith('S') and liga[1].endswith('d'):
-            liga[1] = 'Sued'
-        elif liga[1].startswith('S') and liga[1].endswith('est'):
-            liga[1] = 'Sued-West'
-        elif liga[1].startswith('S') and liga[1].endswith('Ost'):
-            liga[1] = 'Sued-Ost'
-
         # Datumsextraktion
         spieltag = title_list[1].split(' vom ')
         nummer = spieltag[0]
         datum = spieltag[1].split('.')
 
         # Unterordner erstellen
-        pfad = "D:\BTFV-Spielergebnisse" + "\\" + liga[0] + "\\" + liga[1]
+        pfad = "C:\\Users\\menn\\projects\\elo_btfv\\BTFV-Spielergebnisse" + "\\" + liga[0] + "\\" + liga[1]
         if not os.path.exists(pfad):
             os.makedirs(pfad)
 
