@@ -18,7 +18,7 @@ start = 'https://btfv.de/sportdirector/spielbericht/anzeigen/'
 for i in range(2080, 2500):
     try:
 
-        # r: catcht die einzelnen Spielberichte, die sich aus start, dem Counter und '/no_frame' zusammensetzen
+        # r: crawled die einzelnen Spielberichte, die sich aus start, dem Counter und '/no_frame' zusammensetzen
         r = requests.get(start + str(i) + '/no_frame')
         html = bs(r.content, "html.parser")
 
@@ -38,7 +38,7 @@ for i in range(2080, 2500):
         datum = spieltag[1].split('.')
 
         # Unterordner erstellen
-        pfad = "C:\\Users\\menn\\projects\\elo_btfv\\BTFV-Spielergebnisse" + "\\" + liga[0] + "\\" + liga[1]
+        pfad = "C:\\Users\\menn\\projects\\BTFV_ELO\\BTFV-Spielergebnisse" + "\\" + liga[0] + "\\" + liga[1]
         if not os.path.exists(pfad):
             os.makedirs(pfad)
 
