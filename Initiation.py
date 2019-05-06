@@ -9,18 +9,16 @@ Datei crawled von der BTFV-Seite alle Spielberichte und extrahiert aus dem Spiel
 Es wird eine Kopie des Spielberichts mit diesen Informationen abgespeichert.
 """
 
-
-
-# start: RumpfURL zu Spielberichten
-start = 'https://btfv.de/sportdirector/spielbericht/anzeigen/'
+# start_url: RumpfURL zu Spielberichten
+start_url = 'https://btfv.de/sportdirector/spielbericht/anzeigen/'
 base_directory = os.path.dirname(os.path.abspath(__file__))
 
 # i: Initial von 0-2500 gecrawled, zurzeit werden die Spielberichte im Bereich 2080-2500 neu angelegt (nicht linear)
 for i in range(2080, 2500):
     try:
 
-        # r: crawled die einzelnen Spielberichte, die sich aus start, dem Counter und '/no_frame' zusammensetzen
-        r = requests.get(start + str(i) + '/no_frame')
+        # r: crawled die einzelnen Spielberichte, die sich aus start_url, dem Counter und '/no_frame' zusammensetzen
+        r = requests.get(start_url + str(i) + '/no_frame')
         html = bs(r.content, "html.parser")
 
         # team1, team2: selektiert den Teamnamen aus der Soup.
@@ -45,7 +43,7 @@ for i in range(2080, 2500):
 
         # File speichern
         filename = team1 + "-" + team2 + "_" + datum[0] + "-" + datum[1] + "-" + datum[2].strip() + ".html"
-        urllib.request.urlretrieve(start + str(i) + '/no_frame', path + "\\" + filename)
+        urllib.request.urlretrieve(start_url + str(i) + '/no_frame', path + "\\" + filename)
         print(i)
     except:
         print(str(i) + " does not exist")
