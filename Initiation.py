@@ -45,7 +45,7 @@ for i in range(2080, 2500):
 
         # File speichern
         filename = team1 + "-" + team2 + "_" + datum[0] + "-" + datum[1] + "-" + datum[2].strip() + ".html"
-        urllib.request.urlretrieve(start + str(i) + '/no_frame', base_directory + "\\" + filename)
+        urllib.request.urlretrieve(start + str(i) + '/no_frame', path + "\\" + filename)
         print(i)
     except:
         print(str(i) + " does not exist")
