@@ -13,6 +13,7 @@ Es wird eine Kopie des Spielberichts mit diesen Informationen abgespeichert.
 
 # start: RumpfURL zu Spielberichten
 start = 'https://btfv.de/sportdirector/spielbericht/anzeigen/'
+base_directory = os.path.dirname(os.path.abspath(__file__))
 
 # i: Initial von 0-2500 gecrawled, zurzeit werden die Spielberichte im Bereich 2080-2500 neu angelegt (nicht linear)
 for i in range(2080, 2500):
@@ -38,13 +39,13 @@ for i in range(2080, 2500):
         datum = spieltag[1].split('.')
 
         # Unterordner erstellen
-        pfad = "C:\\Users\\menn\\projects\\BTFV_ELO\\BTFV-Spielergebnisse" + "\\" + liga[0] + "\\" + liga[1]
-        if not os.path.exists(pfad):
-            os.makedirs(pfad)
+        path = base_directory + "\\BTFV-Spielergebnisse" + "\\" + liga[0] + "\\" + liga[1]
+        if not os.path.exists(path):
+            os.makedirs(path)
 
         # File speichern
         filename = team1 + "-" + team2 + "_" + datum[0] + "-" + datum[1] + "-" + datum[2].strip() + ".html"
-        urllib.request.urlretrieve(start + str(i) + '/no_frame', pfad + "\\" + filename)
+        urllib.request.urlretrieve(start + str(i) + '/no_frame', base_directory + "\\" + filename)
         print(i)
     except:
         print(str(i) + " does not exist")
