@@ -2,10 +2,11 @@
 from bs4 import BeautifulSoup as bs
 import csv
 import numpy as np
+import os
 
-
-path = "G:\\BTFV-Elo\\Datumssortiert\\2012-01-22(0).html"
-mastercsv = "G:\\BTFV-Elo\\Datumssortiert\\BTFV-ELO.csv"
+base_directory = os.path.dirname(os.path.abspath(__file__))
+path = base_directory + "\\BTFV-Elo\\Datumssortiert\\2012-01-22(0).html"
+mastercsv = base_directory + "\\BTFV-Elo\\Datumssortiert\\BTFV-ELO.csv"
 elo = 800
 games = 0
 names = []
